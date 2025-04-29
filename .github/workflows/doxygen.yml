@@ -1,0 +1,24 @@
+name: Generate Doxygen Docs
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Doxygen
+        run: sudo apt-get install doxygen -y
+
+      - name: Generate Docs
+        run: doxygen Doxyfile
+
+      - name: Upload Docs
+        uses: actions/upload-artifact@v3
+        with:
+          name: doxygen-docs
+          path: html/
